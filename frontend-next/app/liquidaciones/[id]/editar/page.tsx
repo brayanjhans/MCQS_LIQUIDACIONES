@@ -691,8 +691,8 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
               <Plus size={16} /> Registrar Factura
             </button>
           </div>
-          <div className="flex-1 overflow-auto custom-scrollbar p-0">
-            <table className="min-w-full text-left">
+          <div className="overflow-x-auto">
+            <table className="min-w-max w-full text-left">
               <thead className="bg-white sticky top-0 border-b border-[#E0E5F2]">
                 <tr>
                   <th className="font-bold text-[11px] text-[#A3AED0] uppercase tracking-wider px-6 py-4">N° Factura</th>

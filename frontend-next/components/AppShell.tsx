@@ -31,9 +31,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         lg:ml-[320px] on desktop
         ml-0 on mobile
       */}
-      <div className="relative flex flex-col flex-1 lg:ml-[320px] ml-0 overflow-x-hidden overflow-y-auto">
+      <div className="relative flex flex-col flex-1 min-w-0 lg:ml-[320px] ml-0 overflow-x-hidden overflow-y-auto">
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <main className="w-full">
+        <main className="w-full min-w-0">
           {children}
         </main>
       </div>

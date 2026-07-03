@@ -134,7 +134,7 @@ export default function ManoObraPage() {
         </div>
         
         <div className="flex-1 overflow-auto p-0">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-max text-left border-collapse">
             <thead className="bg-[#F8FAFC] sticky top-0 z-10 shadow-sm">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-[#64748B] uppercase tracking-wider">Trabajador</th>
@@ -233,7 +233,7 @@ export default function ManoObraPage() {
           {tareoLoading ? (
             <div className="flex justify-center p-12"><div className="w-8 h-8 border-4 border-[#3C50E0] border-t-transparent rounded-full animate-spin"></div></div>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <table className="w-full min-w-max text-left border-collapse">
               <thead className="bg-[#F8FAFC] sticky top-0 z-10 shadow-sm">
                 <tr>
                   <th className="px-6 py-4 text-xs font-bold text-[#64748B] uppercase tracking-wider">Trabajador</th>

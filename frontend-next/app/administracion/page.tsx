@@ -420,7 +420,7 @@ export default function AdministrationPage() {
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="w-full min-w-max text-left border-collapse">
                       <thead>
                         <tr className="border-b border-[#E2E8F0] dark:border-slate-700 text-slate-500 font-semibold text-sm">
                           <th className="pb-3 px-4">Usuario</th>
@@ -945,7 +945,7 @@ export default function AdministrationPage() {
 
               {/* Table */}
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full min-w-max text-left border-collapse">
                   <thead>
                     <tr className="border-b border-[#E2E8F0] dark:border-slate-700 text-slate-500 font-semibold text-sm">
                       <th className="pb-3 px-4">Fecha / Hora</th>

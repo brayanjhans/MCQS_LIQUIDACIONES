@@ -118,7 +118,7 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
     if (filteredFianzas.length === 0) {
       return (
         <tr>
-          <td colSpan={10} className="px-5 py-8 text-center text-[#A3AED0] font-medium text-sm">
+          <td colSpan={10} className="px-5 py-8 text-left md:text-center text-[#A3AED0] font-medium text-sm">
             No hay registros de {tipoFianza} en la base de datos.
           </td>
         </tr>
@@ -201,16 +201,16 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
   const TableHeader = () => (
     <thead className="bg-white border-b border-[#E0E5F2]">
       <tr>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">TIPO DE CARTA FIANZA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">NÚMERO DE FIANZA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">MONTO DE FIANZA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">FECHA DE INICIO</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">FECHA DE VENCIMIENTO</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">NÚMERO DE FACTURA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">MONTO DE FACTURA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">FECHA SALIDA FACTURA</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">OBSERVACIONES</th>
-        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">DOCUMENTOS</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">TIPO DE CARTA FIANZA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">NÚMERO DE FIANZA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">MONTO DE FIANZA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">FECHA DE INICIO</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">FECHA DE VENCIMIENTO</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">NÚMERO DE FACTURA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">MONTO DE FACTURA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">FECHA SALIDA FACTURA</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">OBSERVACIONES</th>
+        <th className="px-5 py-4 text-left text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider whitespace-nowrap">DOCUMENTOS</th>
       </tr>
     </thead>
   );
@@ -324,12 +324,12 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
       {/* Tablas de Análisis */}
       <div className="space-y-6">
         
-        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="p-6 border-b border-[#E0E5F2] bg-white">
-            <h2 className="text-xl font-bold text-[#1B254B]">Análisis: Fiel Cumplimiento</h2>
+        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden w-full border border-slate-100">
+          <div className="p-4 md:p-6 border-b border-[#E0E5F2] bg-white">
+            <h2 className="text-lg md:text-xl font-bold text-[#1B254B]">Análisis: Fiel Cumplimiento</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="block w-full overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left whitespace-nowrap min-w-[800px]">
               <TableHeader />
               <tbody className="bg-white">
                 {renderFianzaRows('Fiel Cumplimiento')}
@@ -338,12 +338,12 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
           </div>
         </div>
 
-        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="p-6 border-b border-[#E0E5F2] bg-white">
-            <h2 className="text-xl font-bold text-[#1B254B]">Análisis: Adelanto de Materiales</h2>
+        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden w-full border border-slate-100">
+          <div className="p-4 md:p-6 border-b border-[#E0E5F2] bg-white">
+            <h2 className="text-lg md:text-xl font-bold text-[#1B254B]">Análisis: Adelanto de Materiales</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="block w-full overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left whitespace-nowrap min-w-[800px]">
               <TableHeader />
               <tbody className="bg-white">
                 {renderFianzaRows('Adelanto de Materiales')}
@@ -352,12 +352,12 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
           </div>
         </div>
 
-        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
-          <div className="p-6 border-b border-[#E0E5F2] bg-white">
-            <h2 className="text-xl font-bold text-[#1B254B]">Análisis: Adelanto Directo</h2>
+        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden w-full border border-slate-100">
+          <div className="p-4 md:p-6 border-b border-[#E0E5F2] bg-white">
+            <h2 className="text-lg md:text-xl font-bold text-[#1B254B]">Análisis: Adelanto Directo</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="block w-full overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left whitespace-nowrap min-w-[800px]">
               <TableHeader />
               <tbody className="bg-white">
                 {renderFianzaRows('Adelanto Directo')}
@@ -367,12 +367,12 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
         </div>
 
         {/* Resumen Facturas */}
-        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden mt-8">
-          <div className="p-6 border-b border-[#E0E5F2] bg-white">
-            <h2 className="text-xl font-bold text-[#1B254B]">Resumen Global de Facturas (Amortizaciones)</h2>
+        <div className="rounded-[20px] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden mt-8 w-full border border-slate-100">
+          <div className="p-4 md:p-6 border-b border-[#E0E5F2] bg-white">
+            <h2 className="text-lg md:text-xl font-bold text-[#1B254B]">Resumen Global de Facturas</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="block w-full overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left whitespace-nowrap min-w-[800px]">
               <thead className="bg-white border-b border-[#E0E5F2]">
                 <tr>
                   <th className="px-5 py-4 text-[11px] font-bold text-[#A3AED0] uppercase tracking-wider">NÚMERO DE FACTURA</th>
@@ -421,7 +421,7 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
                 })}
                 {facturas.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="px-5 py-8 text-center text-[#A3AED0] font-medium text-sm">
+                    <td colSpan={6} className="px-5 py-8 text-left md:text-center text-[#A3AED0] font-medium text-sm">
                       No hay facturas registradas en el sistema.
                     </td>
                   </tr>

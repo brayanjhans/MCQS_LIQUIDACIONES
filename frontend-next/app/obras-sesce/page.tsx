@@ -45,6 +45,8 @@ export default function ExploradorDiosS3() {
   const [magicLink, setMagicLink] = useState<string | null>(null);
   const [previewFile, setPreviewFile] = useState<Archivo | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showNuevaSubcarpetaModal, setShowNuevaSubcarpetaModal] = useState(false);
+  const [nuevaSubcarpetaNombre, setNuevaSubcarpetaNombre] = useState('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -158,6 +160,25 @@ export default function ExploradorDiosS3() {
         setShowNuevaCarpetaModal(false);
         setNuevaCarpetaNombre('');
         loadCarpetas();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleCrearSubcarpeta = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nuevaSubcarpetaNombre.trim() || !currentPath) return;
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre: `${currentPath.replace(/\/$/, '')}/${nuevaSubcarpetaNombre.trim()}` })
+      });
+      if (res.ok) {
+        setShowNuevaSubcarpetaModal(false);
+        setNuevaSubcarpetaNombre('');
+        loadArchivos(currentPath);
       }
     } catch (e) {
       console.error(e);
@@ -321,10 +342,10 @@ export default function ExploradorDiosS3() {
   });
 
   return (
-    <div className="flex h-screen bg-[#F1F5F9] font-sans text-slate-800 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[calc(100vh-80px)] bg-[#F1F5F9] font-sans text-slate-800 overflow-hidden">
       
       {/* ---------------- SIDEBAR (LEFT) ---------------- */}
-      <div className="w-[300px] shrink-0 border-r border-slate-200 bg-white flex flex-col z-10 shadow-sm relative">
+      <div className={`w-full md:w-[300px] shrink-0 border-b md:border-b-0 md:border-r border-slate-200 bg-white flex-col z-10 shadow-sm relative overflow-hidden ${currentPath ? 'hidden md:flex md:h-full' : 'flex h-full'}`}>
         <div className="p-5 border-b border-slate-100">
           <h1 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
             <Database className="text-blue-600" size={24} /> S3 Explorer
@@ -358,7 +379,7 @@ export default function ExploradorDiosS3() {
 
         {/* Tree View */}
         <div 
-          className="flex-1 overflow-y-auto custom-scrollbar p-3"
+          className="flex-1 overflow-y-auto min-h-0 custom-scrollbar p-3"
           onContextMenu={(e) => { e.preventDefault(); setLeftContextMenu({ x: e.pageX, y: e.pageY }); }}
         >
           {loading ? (
@@ -387,7 +408,7 @@ export default function ExploradorDiosS3() {
 
       {/* ---------------- MAIN CONTENT (CENTER) ---------------- */}
       <div 
-        className={`flex-1 flex flex-col relative transition-colors duration-300 ${isDragging ? 'bg-blue-50/50' : 'bg-[#F1F5F9]'}`}
+        className={`flex-1 flex-col min-h-0 relative transition-colors duration-300 ${isDragging ? 'bg-blue-50/50' : 'bg-[#F1F5F9]'} ${!currentPath ? 'hidden md:flex' : 'flex'}`}
         onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
       >
         {/* Drag Overlay */}
@@ -418,25 +439,25 @@ export default function ExploradorDiosS3() {
         ) : (
           <>
             {/* Header (Glassmorphism) */}
-            <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
-              <div className="flex items-center gap-3">
-                <button onClick={handleBack} className="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-800 transition-colors">
+            <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-slate-200 px-4 py-4 md:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <button onClick={handleBack} className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-500 hover:text-blue-600 shadow-sm hover:shadow transition-all shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                 </button>
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <Folder className="text-blue-600" fill="currentColor" fillOpacity={0.2} size={22} />
-                    {currentPath.replace(/\/$/, '').split('/').pop()}
+                <div className="min-w-0">
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 truncate">
+                    <Folder className="text-blue-600 shrink-0" fill="currentColor" fillOpacity={0.2} size={22} />
+                    <span className="truncate">{currentPath.replace(/\/$/, '').split('/').pop()}</span>
                   </h2>
-                  <p className="text-xs text-slate-500 mt-0.5 font-medium flex items-center gap-1">
+                  <p className="text-xs text-slate-500 mt-0.5 font-medium flex items-center gap-1 truncate">
                     {currentPath}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
                 {/* View Toggle */}
-                <div className="flex bg-slate-100 rounded-lg p-1 border border-slate-200 shadow-inner mr-2">
+                <div className="flex bg-slate-100 rounded-lg p-1 border border-slate-200 shadow-inner shrink-0">
                   <button onClick={() => setViewMode('grid')} className={`p-1.5 rounded-md transition-all ${viewMode === 'grid' ? 'bg-white shadow text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}><LayoutGrid size={16}/></button>
                   <button onClick={() => setViewMode('list')} className={`p-1.5 rounded-md transition-all ${viewMode === 'list' ? 'bg-white shadow text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}><List size={16}/></button>
                 </div>
@@ -444,11 +465,19 @@ export default function ExploradorDiosS3() {
                 <input type="file" multiple ref={fileInputRef} onChange={(e) => { if(e.target.files) handleMultipleUploads(Array.from(e.target.files)) }} className="hidden" />
                 
                 <button 
+                  onClick={() => setShowNuevaSubcarpetaModal(true)}
+                  className="flex items-center justify-center gap-1 sm:gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold shadow-sm transition-all shrink-0"
+                >
+                  <Folder size={16} /> <span className="hidden sm:inline">Nueva Subcarpeta</span>
+                </button>
+
+                <button 
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
-                  className="flex items-center gap-2 bg-slate-900 hover:bg-black text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                  className="flex items-center justify-center gap-1 sm:gap-2 bg-slate-900 hover:bg-black text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold shadow-md transition-all hover:-translate-y-0.5 disabled:opacity-50 shrink-0"
                 >
-                  <UploadCloud size={16} /> {uploading ? 'Subiendo...' : 'Subir Documento'}
+                  <UploadCloud size={16} /> {uploading ? 'Subiendo...' : <span className="hidden sm:inline">Subir Documento</span>}
+                  {!uploading && <span className="sm:hidden">Subir</span>}
                 </button>
               </div>
             </div>
@@ -501,11 +530,11 @@ export default function ExploradorDiosS3() {
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                        <th className="px-4 py-3 w-10"></th>
-                        <th className="px-4 py-3">Nombre</th>
-                        <th className="px-4 py-3 hidden md:table-cell">Etiquetas</th>
-                        <th className="px-4 py-3">Modificado</th>
-                        <th className="px-4 py-3 text-right">Tamaño</th>
+                        <th className="px-3 sm:px-4 py-3 w-8 sm:w-10"></th>
+                        <th className="px-3 sm:px-4 py-3">Nombre</th>
+                        <th className="px-3 sm:px-4 py-3 hidden md:table-cell">Etiquetas</th>
+                        <th className="px-3 sm:px-4 py-3 hidden sm:table-cell">Modificado</th>
+                        <th className="px-3 sm:px-4 py-3 hidden sm:table-cell text-right">Tamaño</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -516,11 +545,17 @@ export default function ExploradorDiosS3() {
                           onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); setContextMenu({ x: e.pageX, y: e.pageY, item: a }); }}
                           className={`border-b border-slate-100 cursor-pointer transition-colors ${previewFile?.key === a.key ? 'bg-blue-50' : 'hover:bg-slate-50'}`}
                         >
-                          <td className="px-4 py-3 text-center">
+                          <td className="px-3 sm:px-4 py-3 text-center">
                             {a.tipo === 'carpeta' ? <Folder size={20} fill="#3C50E0" className="text-blue-600 opacity-80" /> : getFileIcon(a.nombre)}
                           </td>
-                          <td className="px-4 py-3 font-semibold text-sm text-slate-800 truncate max-w-[200px]" title={a.nombre}>{a.nombre}</td>
-                          <td className="px-4 py-3 hidden md:table-cell">
+                          <td className="px-3 sm:px-4 py-3 font-semibold text-sm text-slate-800 break-all sm:break-normal sm:truncate sm:max-w-[200px]" title={a.nombre}>
+                            {a.nombre}
+                            <div className="sm:hidden flex gap-2 mt-1 text-[10px] font-normal text-slate-500">
+                              <span>{a.fecha ? new Date(a.fecha).toLocaleDateString() : '--'}</span>
+                              <span>{a.tipo === 'carpeta' ? '' : `• ${formatBytes(a.tamano_bytes)}`}</span>
+                            </div>
+                          </td>
+                          <td className="px-3 sm:px-4 py-3 hidden md:table-cell">
                             {a.tipo !== 'carpeta' && (
                               <div className="flex gap-1 flex-wrap">
                                 {getSmartTags(a.nombre).map((tag, i) => (
@@ -529,8 +564,8 @@ export default function ExploradorDiosS3() {
                               </div>
                             )}
                           </td>
-                          <td className="px-4 py-3 text-xs text-slate-500 font-mono">{a.fecha ? new Date(a.fecha).toLocaleDateString() : '--'}</td>
-                          <td className="px-4 py-3 text-xs text-slate-500 font-mono text-right">{a.tipo === 'carpeta' ? '--' : formatBytes(a.tamano_bytes)}</td>
+                          <td className="px-3 sm:px-4 py-3 text-xs text-slate-500 font-mono hidden sm:table-cell">{a.fecha ? new Date(a.fecha).toLocaleDateString() : '--'}</td>
+                          <td className="px-3 sm:px-4 py-3 text-xs text-slate-500 font-mono text-right hidden sm:table-cell">{a.tipo === 'carpeta' ? '--' : formatBytes(a.tamano_bytes)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -571,7 +606,7 @@ export default function ExploradorDiosS3() {
               </>
             ) : (
               <>
-                <button onClick={() => { setContextMenu(null); const name = prompt('Nombre de nueva subcarpeta:'); if(name) { fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nombre: `${currentPath?.replace(/\/$/, '')}/${name.trim()}` }) }).then(() => loadArchivos(currentPath!)); } }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><Folder size={14} className="text-blue-500" /> Nueva Carpeta Aquí</button>
+                <button onClick={() => { setContextMenu(null); setShowNuevaSubcarpetaModal(true); }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><Folder size={14} className="text-blue-500" /> Nueva Subcarpeta Aquí</button>
                 <button onClick={() => { setContextMenu(null); fileInputRef.current?.click(); }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><UploadCloud size={14} className="text-emerald-500" /> Subir Archivo</button>
               </>
             )}
@@ -661,6 +696,33 @@ export default function ExploradorDiosS3() {
                 <div className="flex justify-end gap-3">
                   <button type="button" onClick={() => setShowNuevaCarpetaModal(false)} className="px-5 py-2.5 text-sm text-slate-600 font-bold hover:bg-slate-100 rounded-lg transition-colors">Cancelar</button>
                   <button type="submit" className="px-5 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-lg shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors">Crear Obra en S3</button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Nueva Subcarpeta */}
+      <AnimatePresence>
+        {showNuevaSubcarpetaModal && (
+          <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setShowNuevaSubcarpetaModal(false)} />
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md border border-slate-200 overflow-hidden">
+              <div className="p-5 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                <h3 className="font-black text-lg text-slate-900 flex items-center gap-2"><Folder className="text-blue-600"/> Nueva Subcarpeta</h3>
+                <button onClick={() => setShowNuevaSubcarpetaModal(false)} className="text-slate-400 hover:text-slate-600 p-1"><X size={20}/></button>
+              </div>
+              <form onSubmit={handleCrearSubcarpeta} className="p-6">
+                <label className="block text-sm font-bold text-slate-700 mb-2">Nombre de la Subcarpeta</label>
+                <input 
+                  autoFocus required type="text" placeholder="Ej. 08 RESOLUCIONES"
+                  className="w-full rounded-lg border-2 border-slate-200 px-4 py-3 text-sm focus:border-blue-500 outline-none mb-6 font-medium text-slate-900 transition-colors"
+                  value={nuevaSubcarpetaNombre} onChange={e => setNuevaSubcarpetaNombre(e.target.value)} 
+                />
+                <div className="flex justify-end gap-3">
+                  <button type="button" onClick={() => setShowNuevaSubcarpetaModal(false)} className="px-5 py-2.5 text-sm text-slate-600 font-bold hover:bg-slate-100 rounded-lg transition-colors">Cancelar</button>
+                  <button type="submit" className="px-5 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-lg shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors">Crear Subcarpeta</button>
                 </div>
               </form>
             </motion.div>
