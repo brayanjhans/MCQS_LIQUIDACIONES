@@ -147,7 +147,7 @@ export default function FinanzasPage() {
                 <RechartsTooltip 
                   cursor={{ fill: '#F8FAFC' }}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
-                  formatter={(value: number) => [formatMoney(value), 'Monto a vencer']}
+                  formatter={(value) => [formatMoney(value as number), 'Monto a vencer']}
                 />
                 <Bar dataKey="monto" fill="#3C50E0" radius={[6, 6, 0, 0]} maxBarSize={40} />
               </BarChart>
