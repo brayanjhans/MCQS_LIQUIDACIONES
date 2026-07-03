@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #1e40af;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e3a8a;
+  --color-brand-800: #172554;
+  --color-brand-900: #1e3a8a;
+
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-500: #22c55e;
+  --color-success-700: #15803d;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+
+  --font-inter: 'Inter', sans-serif;
+}
+
+body {
+  @apply bg-gray-50 text-gray-800 font-inter antialiased;
+}
+
+/* ================================================
+   GLOBAL DARK MODE OVERRIDES
+   Apply dark colors to ALL pages without editing
+   each page individually.
+   ================================================ */
+
+/* Background overrides */
+.dark body,
+.dark .bg-\[\#F1F5F9\],
+.dark .bg-\[rgb\(241\,245\,249\)\] {
+  background-color: #0F172A !important;
+}
+
+/* All white cards/containers → dark slate */
+.dark .bg-white {
+  background-color: #1E293B !important;
+}
+
+/* Light gray backgrounds → darker */
+.dark .bg-\[\#FAFAFA\],
+.dark .bg-gray-50,
+.dark .bg-slate-50 {
+  background-color: #0F172A !important;
+}
+
+.dark .bg-\[\#EFF4FB\] {
+  background-color: #334155 !important;
+}
+
+/* Blue tinted backgrounds */
+.dark .bg-blue-50 {
+  background-color: rgba(30, 64, 175, 0.15) !important;
+}
+.dark .bg-indigo-50 {
+  background-color: rgba(30, 64, 175, 0.15) !important;
+}
+.dark .bg-rose-50 {
+  background-color: rgba(244, 63, 94, 0.15) !important;
+}
+.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+.dark .bg-emerald-100 {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+}
+.dark .bg-rose-100 {
+  background-color: rgba(244, 63, 94, 0.2) !important;
+}
+.dark .bg-slate-100 {
+  background-color: #334155 !important;
+}
+
+/* Text overrides */
+.dark .text-black,
+.dark .text-slate-900,
+.dark .text-\[\#1C2434\],
+.dark .text-gray-900 {
+  color: #F1F5F9 !important;
+}
+
+.dark .text-slate-800,
+.dark .text-gray-800,
+.dark .text-\[\#0F172A\] {
+  color: #E2E8F0 !important;
+}
+
+.dark .text-slate-700,
+.dark .text-gray-700 {
+  color: #CBD5E1 !important;
+}
+
+.dark .text-slate-500,
+.dark .text-gray-500,
+.dark .text-\[\#64748B\],
+.dark .text-\[\#8A99AF\] {
+  color: #94A3B8 !important;
+}
+
+.dark .text-blue-900 {
+  color: #93C5FD !important;
+}
+.dark .text-blue-800 {
+  color: #BFDBFE !important;
+}
+.dark .text-blue-700 {
+  color: #93C5FD !important;
+}
+
+/* Border overrides */
+.dark .border-\[\#E2E8F0\],
+.dark .border-slate-200,
+.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+.dark .border-slate-100,
+.dark .border-gray-100 {
+  border-color: #1E293B !important;
+}
+.dark .border-blue-200 {
+  border-color: rgba(30, 64, 175, 0.3) !important;
+}
+
+/* Shadow overrides */
+.dark .shadow-xl,
+.dark .shadow-lg,
+.dark .shadow-sm {
+  --tw-shadow-color: rgba(0, 0, 0, 0.3) !important;
+}
+.dark .shadow-slate-200\/50,
+.dark .shadow-slate-200\/30 {
+  --tw-shadow-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Table styles */
+.dark table th {
+  background-color: #1E293B !important;
+  color: #E2E8F0 !important;
+  border-color: #334155 !important;
+}
+.dark table td {
+  color: #CBD5E1 !important;
+  border-color: #334155 !important;
+}
+.dark table tr:hover td {
+  background-color: #334155 !important;
+}
+
+/* Input / form overrides */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #0F172A !important;
+  color: #E2E8F0 !important;
+  border-color: #334155 !important;
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748B !important;
+}
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #1e40af !important;
+}
+
+/* Recharts / SVG */
+.dark .recharts-cartesian-grid line {
+  stroke: #334155 !important;
+}
+.dark .recharts-text {
+  fill: #94A3B8 !important;
+}
+
+/* Scrollbar dark */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #475569;
+}
+.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #64748B;
+}
+
+/* ================================================
+   STANDARD SCROLLBAR
+   ================================================ */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb;
+  border-radius: 20px;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+}

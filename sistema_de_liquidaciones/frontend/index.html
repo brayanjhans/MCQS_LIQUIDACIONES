@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIQUIDACIONES MCQS - Executive Control</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Executive Login Screen -->
+        <section id="auth-screen">
+            <video autoplay muted loop id="bg-video"><source src="assets/video_de_fondo.mp4" type="video/mp4"></video>
+            <div class="overlay-dark"></div>
+            
+            <!-- Top Logos -->
+            <div class="auth-top-logos">
+                <img src="assets/logo-mqs.png" alt="Logo MQS" class="top-logo-left">
+                <img src="assets/logo-jcq.png" alt="Logo JCQ" class="top-logo-right">
+            </div>
+
+            <!-- Main Content: Intro on background, Login in Frame -->
+            <div class="auth-unified-container">
+                <div class="auth-column intro-col">
+                    <h1 class="minimal-title">Liquidaciones<br><span>Corporativas</span></h1>
+                    <p class="minimal-desc">Gestión estratégica de activos y flujo financiero.</p>
+                </div>
+                <div class="auth-column login-col">
+                    <div class="auth-frame-login">
+                        <form id="login-form" class="pure-minimal-form">
+                            <div class="input-minimal">
+                                <input type="text" name="username" placeholder="Usuario" required>
+                            </div>
+                            <div class="input-minimal">
+                                <input type="password" name="password" placeholder="Contraseña" required>
+                            </div>
+                            <button type="submit" class="btn-pure-minimal">INGRESAR</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard -->
+        <main id="dashboard" class="hidden">
+            <!-- New Left Sidebar: Companies & Consortia -->
+            <aside id="sidebar" class="sidebar">
+            <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Contraer/Expandir">☰</button>
+            <div class="sidebar-header">
+                <img src="/static/logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                <h1>LIQUIDACIONES <span>MCQS</span></h1>
+            </div>
+
+            <button class="btn-add-company" onclick="window.openEmpresaModal()">
+                <span>+ AGREGAR EMPRESA</span>
+            </button>
+
+            <div class="footer-item" onclick="window.switchView('home')" style="border-top:none; border-bottom:1px solid #f1f5f9; margin-bottom:12px; padding-bottom:12px; border-radius:0;">
+                <i>🏠</i> <span>INICIO</span>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="sidebar-search" placeholder="Filtrar empresa..." oninput="window.filterCompanies(this.value)">
+            </div>
+
+            <div id="company-list" class="company-list">
+                <!-- Se llena con JS -->
+            </div>
+
+            <div class="sidebar-footer">
+                <div id="btn-manage-users" class="footer-item hidden" onclick="window.renderUserManagement()">
+                    <i>👤</i> <span>GESTIÓN USUARIOS</span>
+                </div>
+                <div class="footer-item" onclick="window.logout()">
+                    <i>🚪</i> <span>CERRAR SESIÓN</span>
+                </div>
+            </div>
+        </aside>
+            <!-- Main Content Area -->
+            <section class="content">
+                <header class="top-bar">
+                    <h1 id="page-title">Seleccione una Empresa</h1>
+                    <div class="user-profile">
+                        <span id="user-display-name">Admin</span>
+                        <div class="avatar">A</div>
+                    </div>
+                </header>
+
+                <div id="view-container">
+                    <!-- Dashboard Detail will appear here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modals -->
+        <div id="modal-container" class="modal hidden">
+            <div class="modal-content glass">
+                <div class="modal-header">
+                    <h3 id="modal-title">Título</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

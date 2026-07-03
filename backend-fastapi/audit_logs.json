@@ -1,0 +1,62 @@
+[
+    {
+        "timestamp": "2026-07-02T18:01:50.829538",
+        "username": "admin_system",
+        "action": "Prueba WhatsApp",
+        "details": "Resultado de mensaje de prueba: error"
+    },
+    {
+        "timestamp": "2026-07-02T17:41:10.523691",
+        "username": "admin_system",
+        "action": "Configuraci\u00f3n Guardada",
+        "details": "L\u00edmites de alertas actualizados"
+    },
+    {
+        "timestamp": "2026-07-02T17:40:19.080613",
+        "username": "admin_system",
+        "action": "Eliminaci\u00f3n de Usuario",
+        "details": "Usuario de baja: testdirector"
+    },
+    {
+        "timestamp": "2026-07-02T17:40:14.171435",
+        "username": "admin_system",
+        "action": "Eliminaci\u00f3n de Usuario",
+        "details": "Usuario de baja: Maylin"
+    },
+    {
+        "timestamp": "2026-07-02T17:39:48.491528",
+        "username": "jhans",
+        "action": "Login",
+        "details": "Inicio de sesi\u00f3n exitoso"
+    },
+    {
+        "timestamp": "2026-07-02T17:33:14.706702",
+        "username": "admin",
+        "action": "Login",
+        "details": "Inicio de sesi\u00f3n exitoso"
+    },
+    {
+        "timestamp": "2026-07-02T17:28:28.552805",
+        "username": "testdirector",
+        "action": "Login",
+        "details": "Inicio de sesi\u00f3n exitoso"
+    },
+    {
+        "timestamp": "2026-07-02T17:22:33.923145",
+        "username": "admin_system",
+        "action": "Creaci\u00f3n de Usuario",
+        "details": "Usuario creado: testdirector con rol director"
+    },
+    {
+        "timestamp": "2026-07-02T17:19:13.830346",
+        "username": "admin_system",
+        "action": "Configuraci\u00f3n Guardada",
+        "details": "L\u00edmites de alertas actualizados"
+    },
+    {
+        "timestamp": "2026-07-02T17:09:02.696935",
+        "username": "admin",
+        "action": "Login",
+        "details": "Inicio de sesi\u00f3n exitoso"
+    }
+]

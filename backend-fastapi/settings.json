@@ -1,0 +1,10 @@
+{
+    "fianzas_dias_previos": 30,
+    "sctr_dias_previos": 25,
+    "emo_dias_previos": 30,
+    "whatsapp_enabled": true,
+    "whatsapp_recipient": "51939882147",
+    "evolution_api_url": "http://localhost:8080",
+    "evolution_api_key": "your_api_key",
+    "evolution_instance_name": "mcqs_instance"
+}

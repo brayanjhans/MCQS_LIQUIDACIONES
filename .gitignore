@@ -1,0 +1,57 @@
+# ===== Python / Backend =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.pyc
+
+# Virtual environment
+backend-fastapi/venv/
+venv/
+env/
+.venv/
+
+# ===== Node.js / Frontend =====
+node_modules/
+frontend-next/node_modules/
+.next/
+frontend-next/.next/
+out/
+frontend-next/out/
+
+# Build outputs
+/build
+/dist
+frontend-next/build/
+frontend-next/dist/
+
+# ===== Variables de entorno (SECRETOS) =====
+.env
+.env.*
+!.env.example
+
+# ===== Logs =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# ===== Sistema Operativo =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== Archivos temporales =====
+*.tmp
+*.temp
+*.bak
