@@ -2,11 +2,12 @@
 import { usePathname, useRouter } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (pathname !== '/login') {
@@ -24,9 +25,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F1F5F9] dark:bg-slate-900 transition-colors duration-300">
-      <Sidebar />
-      <div className="relative flex flex-col flex-1 ml-[320px] overflow-x-hidden overflow-y-auto">
-        <Header />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      
+      {/* 
+        lg:ml-[320px] on desktop
+        ml-0 on mobile
+      */}
+      <div className="relative flex flex-col flex-1 lg:ml-[320px] ml-0 overflow-x-hidden overflow-y-auto">
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <main className="w-full">
           {children}
         </main>

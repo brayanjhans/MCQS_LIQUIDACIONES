@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Moon, Sun, Bell, Menu, ChevronDown, LogOut, HelpCircle, FileText, Users, AlertTriangle } from 'lucide-react';
 
-export default function Header() {
+export default function Header({ sidebarOpen, setSidebarOpen }: { sidebarOpen?: boolean, setSidebarOpen?: (open: boolean) => void }) {
   const router = useRouter();
   
   // States for dropdowns
@@ -116,7 +116,13 @@ export default function Header() {
         
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
-          <button className="z-50 block rounded-sm border border-[#E2E8F0] dark:border-gray-700 bg-white dark:bg-gray-800 p-1.5 shadow-sm">
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setSidebarOpen?.(!sidebarOpen);
+            }}
+            className="z-50 block rounded-sm border border-[#E2E8F0] dark:border-gray-700 bg-white dark:bg-gray-800 p-1.5 shadow-sm"
+          >
             <Menu size={20} className="text-black dark:text-white" />
           </button>
         </div>

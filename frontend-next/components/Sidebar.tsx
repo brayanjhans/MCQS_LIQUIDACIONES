@@ -7,7 +7,7 @@ import {
   Landmark, Settings, ChevronDown, Bell, User, Crown
 } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ sidebarOpen, setSidebarOpen }: { sidebarOpen?: boolean, setSidebarOpen?: (open: boolean) => void }) {
   const pathname = usePathname();
   const [activeModule, setActiveModule] = useState('apps');
   const [role, setRole] = useState<string | null>(null);
@@ -68,7 +68,15 @@ export default function Sidebar() {
   const currentMenu = subMenus[activeModule];
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-[320px] bg-white dark:bg-[#1E293B] border-r border-[#E2E8F0] dark:border-gray-700 overflow-hidden shadow-[4px_0_24px_rgba(0,0,0,0.02)] transition-colors duration-300">
+    <>
+      {/* Overlay for mobile */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden" 
+          onClick={() => setSidebarOpen?.(false)}
+        ></div>
+      )}
+      <aside className={`fixed left-0 top-0 z-40 flex h-screen w-[320px] bg-white dark:bg-[#1E293B] border-r border-[#E2E8F0] dark:border-gray-700 overflow-hidden shadow-[4px_0_24px_rgba(0,0,0,0.02)] transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
       
       {/* TIER 1: Left Icon Strip */}
       <div className="w-[80px] bg-white dark:bg-[#0F172A] border-r border-[#E2E8F0] dark:border-gray-700 flex flex-col items-center py-6 h-full shrink-0 transition-colors duration-300">
@@ -160,5 +168,6 @@ export default function Sidebar() {
       </div>
 
     </aside>
+    </>
   );
 }
