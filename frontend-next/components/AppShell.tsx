@@ -1,10 +1,21 @@
 "use client";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { useEffect } from 'react';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (pathname !== '/login') {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+      }
+    }
+  }, [pathname, router]);
 
   // Don't render sidebar/header on login page
   if (pathname === '/login') {

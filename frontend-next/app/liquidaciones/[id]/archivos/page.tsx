@@ -15,11 +15,11 @@ export default function EmpresaArchivosPage({ params }: { params: Promise<{ id: 
 
   const loadData = () => {
     if (id) {
-      fetch(`http://localhost:8000/api/empresas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${id}`)
         .then(res => res.json())
         .then(data => setEmpresa(data));
 
-      fetch(`http://localhost:8000/api/archivos/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/archivos/${id}`)
         .then(res => res.json())
         .then(data => setArchivos(data));
     }
@@ -47,7 +47,7 @@ export default function EmpresaArchivosPage({ params }: { params: Promise<{ id: 
     formData.append("categoria", categoria);
 
     try {
-      const res = await fetch(`http://localhost:8000/api/archivos/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/archivos/${id}`, {
         method: 'POST',
         body: formData,
       });
@@ -70,7 +70,7 @@ export default function EmpresaArchivosPage({ params }: { params: Promise<{ id: 
   const handleDelete = async (archivoId: number) => {
     if (!confirm("¿Estás seguro de eliminar este archivo?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/archivos/${archivoId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/archivos/${archivoId}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -83,7 +83,7 @@ export default function EmpresaArchivosPage({ params }: { params: Promise<{ id: 
 
   const handleDownload = async (archivoId: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/archivos/descargar/${archivoId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/archivos/descargar/${archivoId}`);
       if (res.ok) {
         const data = await res.json();
         window.open(data.url, '_blank');

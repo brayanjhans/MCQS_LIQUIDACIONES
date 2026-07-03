@@ -99,7 +99,7 @@ export default function ExploradorDiosS3() {
   // -------------------------------------------------------------
   const loadCarpetas = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/licitaciones-s3/carpetas');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas`);
       const data = await res.json();
       setCarpetas(data);
     } catch (e) {
@@ -110,7 +110,7 @@ export default function ExploradorDiosS3() {
   const loadArchivos = async (carpeta: string) => {
     setFilesLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/licitaciones-s3/archivos?carpeta=${encodeURIComponent(carpeta)}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/archivos?carpeta=${encodeURIComponent(carpeta)}`);
       const data = await res.json();
       setArchivos(data);
     } catch (e) {
@@ -149,7 +149,7 @@ export default function ExploradorDiosS3() {
     e.preventDefault();
     if (!nuevaCarpetaNombre.trim()) return;
     try {
-      const res = await fetch('http://localhost:8000/api/licitaciones-s3/carpetas', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nuevaCarpetaNombre.trim() })
@@ -174,7 +174,7 @@ export default function ExploradorDiosS3() {
       formData.append("file", file);
       formData.append("carpeta", currentPath);
       try {
-        await fetch('http://localhost:8000/api/licitaciones-s3/archivos', {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/archivos`, {
           method: 'POST', body: formData,
         });
       } catch (err) {
@@ -189,7 +189,7 @@ export default function ExploradorDiosS3() {
 
   const handleDelete = async (key: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/licitaciones-s3/archivos?key=${encodeURIComponent(key)}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/archivos?key=${encodeURIComponent(key)}`, {
         method: 'DELETE'
       });
       if (res.ok && currentPath) {
@@ -202,7 +202,7 @@ export default function ExploradorDiosS3() {
 
   const handleDeleteCarpeta = async (carpeta: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/licitaciones-s3/carpetas?carpeta=${encodeURIComponent(carpeta)}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas?carpeta=${encodeURIComponent(carpeta)}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -225,7 +225,7 @@ export default function ExploradorDiosS3() {
   const handleDownloadZip = async (carpeta_path: string) => {
     try {
       setDownloadingZip(carpeta_path);
-      const url = `http://localhost:8000/api/licitaciones-s3/carpetas/descargar-zip?carpeta=${encodeURIComponent(carpeta_path)}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas/descargar-zip?carpeta=${encodeURIComponent(carpeta_path)}`;
       const a = document.createElement('a');
       a.href = url;
       document.body.appendChild(a);
@@ -240,7 +240,7 @@ export default function ExploradorDiosS3() {
 
   const handleDownload = async (key: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/licitaciones-s3/archivos/descargar?key=${encodeURIComponent(key)}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/archivos/descargar?key=${encodeURIComponent(key)}`);
       if (res.ok) {
         const data = await res.json();
         window.open(data.url, '_blank');
@@ -259,7 +259,7 @@ export default function ExploradorDiosS3() {
     setPreviewFile(file);
     setPreviewUrl(null);
     try {
-      const res = await fetch(`http://localhost:8000/api/licitaciones-s3/archivos/descargar?key=${encodeURIComponent(file.key)}&inline=true`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/archivos/descargar?key=${encodeURIComponent(file.key)}&inline=true`);
       if (res.ok) {
         const data = await res.json();
         setPreviewUrl(data.url);
@@ -571,7 +571,7 @@ export default function ExploradorDiosS3() {
               </>
             ) : (
               <>
-                <button onClick={() => { setContextMenu(null); const name = prompt('Nombre de nueva subcarpeta:'); if(name) { fetch('http://localhost:8000/api/licitaciones-s3/carpetas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nombre: `${currentPath?.replace(/\/$/, '')}/${name.trim()}` }) }).then(() => loadArchivos(currentPath!)); } }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><Folder size={14} className="text-blue-500" /> Nueva Carpeta Aquí</button>
+                <button onClick={() => { setContextMenu(null); const name = prompt('Nombre de nueva subcarpeta:'); if(name) { fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/licitaciones-s3/carpetas`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nombre: `${currentPath?.replace(/\/$/, '')}/${name.trim()}` }) }).then(() => loadArchivos(currentPath!)); } }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><Folder size={14} className="text-blue-500" /> Nueva Carpeta Aquí</button>
                 <button onClick={() => { setContextMenu(null); fileInputRef.current?.click(); }} className="w-full text-left px-4 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 flex items-center gap-2"><UploadCloud size={14} className="text-emerald-500" /> Subir Archivo</button>
               </>
             )}

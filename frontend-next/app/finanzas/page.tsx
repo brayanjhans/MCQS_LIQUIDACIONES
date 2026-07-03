@@ -38,7 +38,7 @@ export default function FinanzasPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/finanzas/kpis')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/finanzas/kpis`)
       .then(res => res.json())
       .then(data => {
         setKpis(data);

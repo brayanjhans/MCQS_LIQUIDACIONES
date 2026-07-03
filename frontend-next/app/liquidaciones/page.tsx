@@ -24,7 +24,7 @@ export default function EmpresasPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const loadFianzasVencer = () => {
-    fetch('http://localhost:8000/api/fianzas/vencimientos/proximos')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/vencimientos/proximos`)
       .then(res => res.json())
       .then(data => setFianzasVencer(data))
       .catch(err => console.error(err));
@@ -32,7 +32,7 @@ export default function EmpresasPage() {
 
   const loadEmpresas = (term: string = '') => {
     setIsLoading(true);
-    const url = term ? `http://localhost:8000/api/empresas/?q=${encodeURIComponent(term)}` : 'http://localhost:8000/api/empresas/';
+    const url = term ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/?q=${encodeURIComponent(term)}` : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/`;
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -60,7 +60,7 @@ export default function EmpresasPage() {
     e.preventDefault();
     if (!newNombre.trim()) return;
     try {
-      const res = await fetch('http://localhost:8000/api/empresas/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: newNombre })
@@ -90,7 +90,7 @@ export default function EmpresasPage() {
     if (!deleteTargetId) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/empresas/${deleteTargetId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${deleteTargetId}`, {
         method: 'DELETE'
       });
       if (res.ok) {

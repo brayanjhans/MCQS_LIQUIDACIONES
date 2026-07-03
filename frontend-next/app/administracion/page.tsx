@@ -104,7 +104,7 @@ export default function AdministrationPage() {
     setLoadingUsers(true);
     setUserError('');
     try {
-      const res = await fetch('http://localhost:8000/api/auth/users');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/users`);
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
@@ -128,7 +128,7 @@ export default function AdministrationPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/api/auth/users', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -161,7 +161,7 @@ export default function AdministrationPage() {
     setUserSuccess('');
 
     try {
-      const res = await fetch(`http://localhost:8000/api/auth/users/${userId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/users/${userId}`, {
         method: 'DELETE'
       });
 
@@ -180,7 +180,7 @@ export default function AdministrationPage() {
   const fetchConnections = async () => {
     setCheckingConnections(true);
     try {
-      const res = await fetch('http://localhost:8000/api/auth/connection-status');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/connection-status`);
       if (res.ok) {
         const data = await res.json();
         setConnectionStatus(data);
@@ -196,7 +196,7 @@ export default function AdministrationPage() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/auth/settings');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/settings`);
       if (res.ok) {
         const data = await res.json();
         setSettings(data);
@@ -212,7 +212,7 @@ export default function AdministrationPage() {
     setSettingsSuccess(false);
 
     try {
-      const res = await fetch('http://localhost:8000/api/auth/settings', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings)
@@ -233,7 +233,7 @@ export default function AdministrationPage() {
     setTestingWhatsApp(true);
     setWhatsappResult(null);
     try {
-      const res = await fetch('http://localhost:8000/api/auth/whatsapp-test', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/whatsapp-test`, {
         method: 'POST'
       });
       const data = await res.json();
@@ -253,7 +253,7 @@ export default function AdministrationPage() {
     setTriggeringWhatsApp(true);
     setWhatsappResult(null);
     try {
-      const res = await fetch('http://localhost:8000/api/auth/whatsapp-trigger', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/whatsapp-trigger`, {
         method: 'POST'
       });
       const data = await res.json();
@@ -277,7 +277,7 @@ export default function AdministrationPage() {
 
   const fetchLogs = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/auth/audit-logs');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/audit-logs`);
       if (res.ok) {
         const data = await res.json();
         setLogs(data);

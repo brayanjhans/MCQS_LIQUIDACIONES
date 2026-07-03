@@ -38,7 +38,7 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
 
   const handleDownloadFianza = async (fianzaId: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/fianzas/download/${fianzaId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/download/${fianzaId}`);
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
@@ -57,7 +57,7 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
 
   const handleDownloadFactura = async (facturaId: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/facturas/download/${facturaId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/download/${facturaId}`);
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
@@ -76,19 +76,19 @@ export default function EmpresaDetallePageReadOnly({ params }: { params: Promise
 
   useEffect(() => {
     if (id) {
-      fetch(`http://localhost:8000/api/empresas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${id}`)
         .then(res => res.json())
         .then(data => setEmpresa(data));
 
-      fetch(`http://localhost:8000/api/consorciados/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/consorciados/${id}`)
         .then(res => res.json())
         .then(data => setConsorciados(data));
 
-      fetch(`http://localhost:8000/api/fianzas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/${id}`)
         .then(res => res.json())
         .then(data => setFianzas(data));
 
-      fetch(`http://localhost:8000/api/facturas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/${id}`)
         .then(res => res.json())
         .then(data => setFacturas(data));
     }

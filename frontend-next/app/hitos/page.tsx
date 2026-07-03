@@ -28,7 +28,7 @@ export default function HitosPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/hitos')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/hitos`)
       .then(res => res.json())
       .then(data => {
         setObras(data.obras || []);

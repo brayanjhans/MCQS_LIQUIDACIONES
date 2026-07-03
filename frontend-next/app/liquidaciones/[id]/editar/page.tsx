@@ -136,7 +136,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
 
   const loadData = () => {
     if (id) {
-      fetch(`http://localhost:8000/api/empresas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${id}`)
         .then(res => res.json())
         .then(data => {
           setEmpresa(data);
@@ -154,15 +154,15 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
           setDescripcion(data.descripcion || '');
         });
 
-      fetch(`http://localhost:8000/api/consorciados/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/consorciados/${id}`)
         .then(res => res.json())
         .then(data => setConsorciados(data));
 
-      fetch(`http://localhost:8000/api/fianzas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/${id}`)
         .then(res => res.json())
         .then(data => setFianzas(data));
 
-      fetch(`http://localhost:8000/api/facturas/${id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/${id}`)
         .then(res => res.json())
         .then(data => setFacturas(data));
     }
@@ -189,7 +189,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
         descripcion: descripcion || undefined
       };
 
-      const response = await fetch(`http://localhost:8000/api/empresas/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -207,7 +207,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
   const handleSaveConsorciado = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:8000/api/consorciados/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/consorciados/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(consorciadoForm)
@@ -225,7 +225,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
   const handleSaveFianza = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingFianzaId ? `http://localhost:8000/api/fianzas/${editingFianzaId}` : `http://localhost:8000/api/fianzas/${id}`;
+      const url = editingFianzaId ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/${editingFianzaId}` : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/${id}`;
       const method = editingFianzaId ? 'PUT' : 'POST';
       
       const formData = new FormData();
@@ -256,7 +256,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
   const handleSaveFactura = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const url = editingFacturaId ? `http://localhost:8000/api/facturas/${editingFacturaId}` : `http://localhost:8000/api/facturas/${id}`;
+      const url = editingFacturaId ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/${editingFacturaId}` : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/${id}`;
       const method = editingFacturaId ? 'PUT' : 'POST';
       
       const formData = new FormData();
@@ -288,7 +288,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
 
   const handleDownloadFianza = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/fianzas/download/${id}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/download/${id}`);
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
@@ -307,7 +307,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
 
   const handleDownloadFactura = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/facturas/download/${id}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/download/${id}`);
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
@@ -374,9 +374,9 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
     if (!deleteTarget) return;
 
     if (deleteTarget.type === 'fianza') {
-      await fetch(`http://localhost:8000/api/fianzas/${deleteTarget.id}`, { method: 'DELETE' });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/fianzas/${deleteTarget.id}`, { method: 'DELETE' });
     } else if (deleteTarget.type === 'factura') {
-      await fetch(`http://localhost:8000/api/facturas/${deleteTarget.id}`, { method: 'DELETE' });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/facturas/${deleteTarget.id}`, { method: 'DELETE' });
     }
     
     setShowDeleteModal(false);
@@ -441,7 +441,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
 
   const handleExportarWord = () => {
     if (!empresa) return;
-    window.open(`http://localhost:8000/api/reporte/empresa/${id}/word`, '_blank');
+    window.open(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/reporte/empresa/${id}/word`, '_blank');
   };
 
   const inputClass = "mt-1 block w-full rounded-xl border border-[#E0E5F2] px-4 py-2.5 text-sm font-medium text-[#1B254B] focus:border-[#4318FF] focus:ring-1 focus:ring-[#4318FF] outline-none transition-all shadow-sm";
@@ -465,7 +465,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
               <button 
                 onClick={async () => {
                   try {
-                    const res = await fetch(`http://localhost:8000/api/empresas/${id}`, {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/${id}`, {
                       method: 'PUT',
                       headers: {'Content-Type': 'application/json'},
                       body: JSON.stringify({nombre: editedName})
@@ -497,7 +497,7 @@ export default function EmpresaDetallePageEditable({ params }: { params: Promise
         
         <div className="flex flex-wrap gap-3">
           <button 
-            onClick={() => window.open(`http://localhost:8000/api/reporte/empresa/${id}`, '_blank')}
+            onClick={() => window.open(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/reporte/empresa/${id}`, '_blank')}
             className="px-5 py-2.5 bg-[#FFF4F4] rounded-[15px] text-sm font-bold text-[#EE5D50] hover:bg-[#FEE2E2] flex items-center gap-2 shadow-sm transition-colors"
           >
             <Download size={18} /> Reporte (PDF)

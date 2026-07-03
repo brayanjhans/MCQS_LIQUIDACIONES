@@ -37,7 +37,7 @@ export default function ManoObraPage() {
 
   const fetchTrabajadores = () => {
     setLoading(true);
-    fetch('http://localhost:8000/api/trabajadores')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/trabajadores`)
       .then(res => res.json())
       .then(data => {
         setTrabajadores(data);
@@ -57,7 +57,7 @@ export default function ManoObraPage() {
 
   const fetchTareo = () => {
     setTareoLoading(true);
-    fetch(`http://localhost:8000/api/tareo?fecha=${tareoDate}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/tareo?fecha=${tareoDate}`)
       .then(res => res.json())
       .then(data => {
         setTareoData(data);
@@ -91,7 +91,7 @@ export default function ManoObraPage() {
       estado: t.asistencia?.estado || 'Asistió'
     }));
     
-    fetch('http://localhost:8000/api/tareo', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/tareo`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

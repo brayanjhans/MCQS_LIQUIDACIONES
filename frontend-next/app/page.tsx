@@ -36,7 +36,7 @@ export default function Dashboard() {
   const complianceValue = Math.min(100, Math.max(0, 75.55 * (timeValue / 100) + 5));
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/empresas/')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/empresas/`)
       .then(res => res.json())
       .then(data => setEmpresasCount(data.length))
       .catch(() => {});

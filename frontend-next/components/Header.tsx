@@ -50,7 +50,7 @@ export default function Header() {
     document.addEventListener('keydown', handleKeyDown);
 
     // Fetch Notifications (Fianzas vencidas o por vencer en 15 dias)
-    fetch('http://localhost:8000/api/hitos')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/hitos`)
       .then(res => res.json())
       .then(data => {
          const fianzas = data.fianzas || [];
@@ -80,7 +80,7 @@ export default function Header() {
     
     setIsSearching(true);
     const delayDebounceFn = setTimeout(() => {
-      fetch(`http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/search?q=${encodeURIComponent(searchQuery)}`)
         .then(res => res.json())
         .then(data => {
           setSearchResults(data);
